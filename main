@@ -1,0 +1,110 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Contacto {
+    private String nombre;
+    private String telefono;
+    private String direccion;
+    private String correoElectronico;
+    private String categoria;
+
+    public Contacto(String nombre, String telefono, String direccion, String correoElectronico, String categoria) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.correoElectronico = correoElectronico;
+        this.categoria = categoria;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + "\n" +
+                "Teléfono: " + telefono + "\n" +
+                "Dirección: " + direccion + "\n" +
+                "Correo electrónico: " + correoElectronico + "\n" +
+                "Categoría: " + categoria + "\n";
+    }
+}
+
+public class AgendaContactos {
+    private List<Contacto> contactos;
+
+    public AgendaContactos() {
+        contactos = new ArrayList<>();
+    }
+
+    public void agregarContacto(Contacto contacto) {
+        contactos.add(contacto);
+        System.out.println("Contacto agregado con éxito.");
+    }
+
+    public void mostrarContactosPorCategoria(String categoria) {
+        System.out.println("Contactos en la categoría " + categoria + ":");
+        for (Contacto contacto : contactos) {
+            if (contacto.getCategoria().equalsIgnoreCase(categoria)) {
+                System.out.println(contacto);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        AgendaContactos agenda = new AgendaContactos();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Agregar contacto");
+            System.out.println("2. Mostrar contactos por categoría");
+            System.out.println("3. Salir");
+            System.out.print("Ingrese su opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
+
+            if (opcion == 1) {
+                System.out.print("Ingrese el nombre: ");
+                String nombre = scanner.nextLine();
+                System.out.print("Ingrese el teléfono: ");
+                String telefono = scanner.nextLine();
+                System.out.print("Ingrese la dirección: ");
+                String direccion = scanner.nextLine();
+                System.out.print("Ingrese el correo electrónico: ");
+                String correoElectronico = scanner.nextLine();
+                System.out.print("Ingrese la categoría (Empresa/Trabajo/Hogar/Amistad): ");
+                String categoria = scanner.nextLine();
+
+                Contacto nuevoContacto = new Contacto(nombre, telefono, direccion, correoElectronico, categoria);
+                agenda.agregarContacto(nuevoContacto);
+            } else if (opcion == 2) {
+                System.out.print("Ingrese la categoría a mostrar: ");
+                String categoria = scanner.nextLine();
+                agenda.mostrarContactosPorCategoria(categoria);
+            } else if (opcion == 3) {
+                break;
+            } else {
+                System.out.println("Opción inválida. Intente nuevamente.");
+            }
+        }
+
+        scanner.close();
+    }
+}
